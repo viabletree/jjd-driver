@@ -1,0 +1,3 @@
+import AdditionalVehicleInfoController from "./AdditionalVehicleInfoController";
+
+export default AdditionalVehicleInfoController;
