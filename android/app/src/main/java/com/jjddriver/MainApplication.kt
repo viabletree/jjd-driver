@@ -1,4 +1,4 @@
-package com.jjddriver
+package com.jjd.driver
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -12,8 +12,8 @@ class LoginController extends React.Component {
   constructor() {
     super();
     this.state = {
-      number: '',
-      // number: '7789555554',
+      // number: '',
+      number: '7778900009',
       // number: '7778900009',
       // number: '07557857345', //amarnath.sivert@gmail.com
       // number: '07557857540', //bernard.sivert1@gmail.com
@@ -88,7 +88,4 @@ class LoginController extends React.Component {
 }
 const mapStateToProps = ({}) => ({});
 const actions = {requestCode};
-export default connect(
-  mapStateToProps,
-  actions,
-)(LoginController);
+export default connect(mapStateToProps, actions)(LoginController);

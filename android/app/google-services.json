@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "121935030966",
+    "firebase_url": "https://jjd-van-driver-default-rtdb.firebaseio.com",
+    "project_id": "jjd-van-driver",
+    "storage_bucket": "jjd-van-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121935030966:android:73282c213196960eccd417",
+        "android_client_info": {
+          "package_name": "com.jjd.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121935030966-e3rfj2j38vngqspig32ssbbrlet40v8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADosPXxO-HUsXu6wFkjbzfPvB8Rq8rbM4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121935030966-e3rfj2j38vngqspig32ssbbrlet40v8h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "121935030966-4s085r2od01rer05f9nb303r5r1m4bp9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jjdvans.jjddriver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.jjddriver
+package com.jjd.driver
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

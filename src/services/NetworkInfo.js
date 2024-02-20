@@ -1,4 +1,4 @@
-import { NetInfo } from "react-native";
+import {NetInfo} from 'react-native';
 
 class NetworkInfo {
   networkInfoListener(dispatch, networkInfoAction) {
@@ -6,20 +6,20 @@ class NetworkInfo {
       dispatch(networkInfoAction(isNetworkConnected));
     });
 
-    NetInfo.isConnected.addEventListener(
-      "connectionChange",
+    NetInfo?.isConnected?.addEventListener(
+      'connectionChange',
       isNetworkConnected => {
         dispatch(networkInfoAction(isNetworkConnected));
-      }
+      },
     );
   }
 
   removeNetworkInfoListener(dispatch, networkInfoAction) {
     NetInfo.isConnected.removeEventListener(
-      "connectionChange",
+      'connectionChange',
       isNetworkConnected => {
         dispatch(networkInfoAction(isNetworkConnected));
-      }
+      },
     );
   }
 }

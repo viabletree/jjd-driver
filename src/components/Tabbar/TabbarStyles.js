@@ -3,8 +3,6 @@ import {Colors, Metrics, AppStyles} from '../../theme';
 
 export default StyleSheet.create({
   container: {
-    height: Metrics.navBarHeight,
-
     backgroundColor: Colors.white,
     shadowColor: Colors.white,
     shadowOffset: {
@@ -21,6 +19,7 @@ export default StyleSheet.create({
   },
   itemWrapper: {
     alignItems: 'center',
+    marginBottom: 20,
   },
   btn1: {
     width: 50,

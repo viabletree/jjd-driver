@@ -9,6 +9,8 @@ import applyConfigSettings from './config';
 import AppStyles from './theme/AppStyles';
 import Util from './util';
 import DataHandler from './services/DataHandler';
+import {notificationSerivces} from './Helper/PushNotification';
+import ForegroundHander from './Helper/ForegroundNotification.js';
 
 const reducers = require('./reducers').default;
 
@@ -28,11 +30,13 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    if (Util.isPlatformAndroid()) {
-      setTimeout(() => {
-        NativeModules.SplashScreen.hide();
-      }, 2000);
-    }
+    notificationSerivces();
+    console.log('notificationSerivces');
+    // if (Util.isPlatformAndroid()) {
+    //   setTimeout(() => {
+    //     NativeModules.SplashScreen?.hide();
+    //   }, 2000);
+    // }
   }
 
   render() {
@@ -47,6 +51,8 @@ export default class App extends Component {
           barStyle="dark-content"
           translucent={true}
         />
+        <ForegroundHander />
+
         <Provider store={this.state.store}>
           <AppNavigator />
         </Provider>

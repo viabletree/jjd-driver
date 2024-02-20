@@ -295,7 +295,6 @@ export const callRequest = function (
   if (url.type === REQUEST_TYPE.POST) {
     // ;
     if (baseUrl === BASE_URL) {
-      console.log('here');
       data._csrf = Util.getCurrentCsrfToken();
     }
     // data._csrf = Util.getCurrentCsrfToken();

@@ -112,58 +112,58 @@ class Welcome extends Component {
       }
     }
   };
-  _fcmInit = async () => {
-    // ------------- CHANNEL INIT --------------
-    if (Util.isPlatformAndroid()) setChannelForAndroid();
+  // _fcmInit = async () => {
+  //   // ------------- CHANNEL INIT --------------
+  //   if (Util.isPlatformAndroid()) setChannelForAndroid();
 
-    // ------------- iOS Permission --------------
-    if (!Util.isPlatformAndroid()) getPermissions();
+  //   // ------------- iOS Permission --------------
+  //   if (!Util.isPlatformAndroid()) getPermissions();
 
-    // ------------- TOKEN INIT --------------
+  //   // ------------- TOKEN INIT --------------
 
-    updateDeviceToken();
+  //   updateDeviceToken();
 
-    this.onTokenRefreshListener = firebase
-      .messaging()
-      .onTokenRefresh(fcmToken => {
-        updateDeviceToken(fcmToken);
-      });
+  //   this.onTokenRefreshListener = firebase
+  //     .messaging()
+  //     .onTokenRefresh(fcmToken => {
+  //       updateDeviceToken(fcmToken);
+  //     });
 
-    // ------------- NOTIFICATION LISTNER --------------
+  //   // ------------- NOTIFICATION LISTNER --------------
 
-    this.notificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened(notificationOpen => {
-        // when app is in background
-        // console.log({ background: notificationOpen });
+  //   this.notificationOpenedListener = firebase
+  //     .notifications()
+  //     .onNotificationOpened(notificationOpen => {
+  //       // when app is in background
+  //       // console.log({ background: notificationOpen });
 
-        if (notificationOpen && notificationOpen.notification) {
-          navigateOnNotificationTap(notificationOpen.notification._data);
-        }
-      });
+  //       if (notificationOpen && notificationOpen.notification) {
+  //         navigateOnNotificationTap(notificationOpen.notification._data);
+  //       }
+  //     });
 
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification(notification => {
-        // when app is in foreground
-        console.log({foreground: notification});
+  //   this.notificationListener = firebase
+  //     .notifications()
+  //     .onNotification(notification => {
+  //       // when app is in foreground
+  //       console.log({foreground: notification});
 
-        if (notification) {
-          showLocalNotification(notification._data);
-        }
-      });
+  //       if (notification) {
+  //         showLocalNotification(notification._data);
+  //       }
+  //     });
 
-    const notificationOpen = await firebase
-      .notifications()
-      .getInitialNotification();
-    if (notificationOpen) {
-      // when app is in closed, and opened by clicking notification
-      console.log('getInitialNotification', notificationOpen);
-      if (notificationOpen && notificationOpen.notification) {
-        navigateOnNotificationTap(notificationOpen.notification._data, true);
-      }
-    }
-  };
+  //   const notificationOpen = await firebase
+  //     .notifications()
+  //     .getInitialNotification();
+  //   if (notificationOpen) {
+  //     // when app is in closed, and opened by clicking notification
+  //     console.log('getInitialNotification', notificationOpen);
+  //     if (notificationOpen && notificationOpen.notification) {
+  //       navigateOnNotificationTap(notificationOpen.notification._data, true);
+  //     }
+  //   }
+  // };
 
   _userLoginRequest = async () => {
     const userCredentials = await Util.getGenericPassword();

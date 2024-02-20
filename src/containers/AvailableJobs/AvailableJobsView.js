@@ -14,6 +14,8 @@ import {
   SubTabs,
   AvailableJobItem,
 } from '../../components';
+import messaging from '@react-native-firebase/messaging';
+
 import styles from './AvailableJobsStyles';
 import {Colors, Metrics, AppStyles, Fonts} from '../../theme';
 import Carousel from 'react-native-snap-carousel';
@@ -84,7 +86,14 @@ export default function AvailableJobsView(props) {
                 title="Have you marked your next 14 days availability?"
                 buttonText="Mark Availability Now"
                 action={() => {
-                  Actions.jump('availability');
+                  // Actions.jump('availability');
+                  messaging().onNotificationOpenedApp(remoteMessage => {
+                    console.log(
+                      'Notification caused app to open from background state:',
+                      remoteMessage.notification,
+                    );
+                    // Navigate to the desired screen based on 'remoteMessage'
+                  });
                 }}
               />
             );

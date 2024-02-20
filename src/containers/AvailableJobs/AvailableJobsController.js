@@ -18,9 +18,14 @@ import {
   registerAppWithFCM,
 } from '../../services/firebaseHelper';
 // import firebase from 'react-native-firebase';
+import messaging from '@react-native-firebase/messaging';
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import moment from 'moment';
 import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
+import util from '../../util';
+import {PermissionsAndroid} from 'react-native';
 
 class AvailableJobsController extends React.Component {
   constructor() {
@@ -53,7 +58,7 @@ class AvailableJobsController extends React.Component {
     this.props.setSelectedTab(0);
     // console.log('here in onEnter');
     setTimeout(() => {
-      this.initialCall(this.state.period);
+      // this.initialCall(this.state.period);
     }, 1000);
   }
 
@@ -63,76 +68,80 @@ class AvailableJobsController extends React.Component {
   };
   static defaultProps = {};
 
-  componentWillMount() {
-    // this._fcmInit();
-  }
+  // componentWillMount() {
+  //   this._fcmInit();
+  // }
 
   async componentDidMount() {
+    this._fcmInit();
     setTimeout(() => {
       this.initialCall(this.state.period);
     }, 1000);
   }
 
   componentWillUnmount() {
-    try {
-      this.notificationListener();
+    if (this.notificationOpenedListener) {
       this.notificationOpenedListener();
-    } catch (error) {
-      console.log('Error in AvailableJobsController -> componentWillUnmount');
-      console.log(error);
     }
+    // try {
+
+    //   // this.notificationListener();
+    //   this.notificationOpenedListener();
+    // } catch (error) {
+    //   console.log('Error in AvailableJobsController -> componentWillUnmount');
+    //   console.log({error});
+    // }
+  }
+  async requestNotificationPermission() {
+    if (Platform.OS === 'android') {
+      const result = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        {
+          title: 'Notification Permission',
+          message:
+            'This app needs access to your notifications to work properly',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+
+      return result === PermissionsAndroid.RESULTS.GRANTED;
+    }
+
+    return true;
   }
   _fcmInit = async () => {
-    // ------------- CHANNEL INIT --------------
-    if (Util.isPlatformAndroid()) setChannelForAndroid();
+    this.requestNotificationPermission();
 
-    // ------------- iOS Permission --------------
-    if (!Util.isPlatformAndroid()) getPermissions();
-
-    // ------------- TOKEN INIT --------------
-
-    updateDeviceToken();
-
-    this.onTokenRefreshListener = firebase
-      .messaging()
-      .onTokenRefresh(fcmToken => {
-        updateDeviceToken(fcmToken);
-      });
-
-    // ------------- NOTIFICATION LISTNER --------------
-
-    this.notificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened(notificationOpen => {
-        // when app is in background
-        // console.log({ background: notificationOpen });
-
-        if (notificationOpen && notificationOpen.notification) {
-          navigateOnNotificationTap(notificationOpen.notification._data);
+    PushNotification.configure({
+      onRegister: function (token) {
+        updateDeviceToken();
+      },
+      onNotification: function (notification) {
+        console.log({notificationnotification: notification?.userInteraction});
+        const {data, userInteraction} = notification;
+        if (userInteraction) {
+          navigateOnNotificationTap(data, true);
         }
-      });
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
 
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification(notification => {
-        // when app is in foreground
-        console.log({foreground: notification});
-
-        if (notification) {
-          showLocalNotification(notification._data);
-        }
-      });
-
-    const notificationOpen = await firebase
-      .notifications()
-      .getInitialNotification();
-    if (notificationOpen) {
-      // when app is in closed, and opened by clicking notification
-      console.log('getInitialNotification', notificationOpen);
-      if (notificationOpen && notificationOpen.notification) {
-        navigateOnNotificationTap(notificationOpen.notification._data, true);
-      }
-    }
+      onAction: function (notification) {
+        console.log('ACTION:', notification);
+        console.log('NOTIFICATION:', notification);
+      },
+      onRegistrationError: function (err) {
+        console.error(err.message, err);
+      },
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
   };
 
   initialCall = period => {

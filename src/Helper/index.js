@@ -22,7 +22,6 @@ const make_user_data = data => {
   vehicleData = tempData[0].vehicle[0];
   // vehicleData.homeArea = userData.homeArea;
   // vehicleData.wheelBase = 'luton';
-  console.log('here');
   return {userData, vehicleData};
 };
 export {make_user_data};
