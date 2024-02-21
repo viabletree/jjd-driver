@@ -83,8 +83,8 @@ class AvailableJobsController extends React.Component {
     if (this.notificationOpenedListener) {
       this.notificationOpenedListener();
     }
-    // try {
 
+    // try {
     //   // this.notificationListener();
     //   this.notificationOpenedListener();
     // } catch (error) {
@@ -92,6 +92,7 @@ class AvailableJobsController extends React.Component {
     //   console.log({error});
     // }
   }
+
   async requestNotificationPermission() {
     if (Platform.OS === 'android') {
       const result = await PermissionsAndroid.request(
@@ -113,15 +114,21 @@ class AvailableJobsController extends React.Component {
   }
   _fcmInit = async () => {
     this.requestNotificationPermission();
-
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      const {data} = remoteMessage;
+      console.log({datadata: data, remoteMessage});
+    });
+    console.log('_fcmInit_fcmInit');
     PushNotification.configure({
       onRegister: function (token) {
+        console.log({token});
         updateDeviceToken();
       },
       onNotification: function (notification) {
         console.log({notificationnotification: notification?.userInteraction});
         const {data, userInteraction} = notification;
         if (userInteraction) {
+          console.log({userInteraction});
           navigateOnNotificationTap(data, true);
         }
         notification.finish(PushNotificationIOS.FetchResult.NoData);

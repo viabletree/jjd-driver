@@ -22,6 +22,7 @@ import Carousel from 'react-native-snap-carousel';
 import {Actions} from 'react-native-router-flux';
 import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 export default function AvailableJobsView(props) {
   const {
@@ -86,14 +87,7 @@ export default function AvailableJobsView(props) {
                 title="Have you marked your next 14 days availability?"
                 buttonText="Mark Availability Now"
                 action={() => {
-                  // Actions.jump('availability');
-                  messaging().onNotificationOpenedApp(remoteMessage => {
-                    console.log(
-                      'Notification caused app to open from background state:',
-                      remoteMessage.notification,
-                    );
-                    // Navigate to the desired screen based on 'remoteMessage'
-                  });
+                  Actions.jump('availability');
                 }}
               />
             );

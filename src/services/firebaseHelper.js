@@ -17,7 +17,7 @@ const updateDeviceToken = async token => {
   let fcmToken = '';
 
   fcmToken = await messaging().getToken();
-
+  console.log({fcmToken});
   if (fcmToken) {
     console.log({fcmToken});
     DataHandler.getStore().dispatch(
@@ -32,6 +32,7 @@ const updateDeviceToken = async token => {
 };
 
 const navigateOnNotificationTap = (data, isFreshLaunch = false) => {
+  console.log({data});
   switch (data.type) {
     case NOTIFICATION_TYPES.MARK_AVAILABILITY:
       Actions.jump('availability');

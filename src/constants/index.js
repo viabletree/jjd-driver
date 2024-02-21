@@ -140,8 +140,7 @@ export const LOCATION = {
       height: 108,
       format: 'png',
       bytes: 19906,
-      url:
-        'http://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
+      url: 'http://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
       secure_url:
         'https://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
     },
@@ -155,8 +154,7 @@ export const LOCATION = {
       height: 108,
       format: 'png',
       bytes: 19906,
-      url:
-        'http://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
+      url: 'http://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
       secure_url:
         'https://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
     },
@@ -170,8 +168,7 @@ export const LOCATION = {
       height: 108,
       format: 'png',
       bytes: 19906,
-      url:
-        'http://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
+      url: 'http://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
       secure_url:
         'https://res.cloudinary.com/kiffgo/image/upload/v1568704458/tbiaja4yhlxaw3mao8nt.png',
     },

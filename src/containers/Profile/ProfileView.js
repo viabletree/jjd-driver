@@ -112,6 +112,15 @@ export default function ProfileView(props) {
             </View>
           </View>
 
+          <View style={styles.profileWrapper}>
+            <TouchableOpacity
+              style={[styles.rectangleBox, {backgroundColor: 'red'}]}>
+              <Text color={Colors.white} size={Fonts.size.xiv}>
+                Delete Account
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           {/* profile row end*/}
           <View style={styles.profileWrapper}>
             {/* earning row end*/}

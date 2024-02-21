@@ -48,18 +48,20 @@ export default ForegroundHander = () => {
           data: result?.length > 0 ? JSON.parse(result) : data,
         });
       } else {
-        try {
-          PushNotificationIOS.addNotificationRequest({
-            message: title,
-            title: title,
-            body: body,
-            sound: 'default',
-            id: notificationId || `${getRandomInt(1, 1000000)}`,
-            userInfo: data,
-          });
-        } catch (error) {
-          console.error('addNotificationRequest error ==>>', error);
-        }
+        console.log('ioosss', PushNotificationIOS);
+
+        PushNotificationIOS.addNotificationRequest({
+          message: title,
+          title: title,
+          body: body,
+          vibrate: true,
+          playSound: true,
+          soundName: 'default',
+          id: notificationId,
+          massageId: notificationId,
+          userInfo: data,
+          interruptionLevel: 'timeSensitive',
+        });
 
         // PushNotification.localNotification({
         //   title: title,
