@@ -15,6 +15,7 @@ import {
   PROFILE_DATA,
   GET_VEHICLE_DETAIL_DATA_REQUEST,
   DRIVER_LOGOUT,
+  DELETE_ACCOUNT,
 } from '../actions/ActionTypes';
 
 const initialState = Immutable({
@@ -83,6 +84,13 @@ export default (state = initialState, action) => {
     // when user logout then empty data
     case DRIVER_LOGOUT.SUCCESS: {
       return Immutable.merge(state, initialState);
+    }
+    case DELETE_ACCOUNT.SUCCESS: {
+      const newState = _.cloneDeep(state.profileData);
+      newState.request_delete = true;
+      return Immutable.merge(state, {
+        profileData: newState,
+      });
     }
     default:
       return state;

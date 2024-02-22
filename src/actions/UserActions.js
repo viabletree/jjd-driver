@@ -11,6 +11,7 @@ import {
   PROFILE_DATA,
   GET_VEHICLE_DETAIL_DATA_REQUEST,
   DRIVER_LOGOUT,
+  DELETE_ACCOUNT,
 } from './ActionTypes';
 
 //Requesting otp from server
@@ -103,6 +104,12 @@ export function driverLogoutRequest(responseCallback) {
 }
 export function driverLogoutSuccess(data) {
   return {data, type: DRIVER_LOGOUT.SUCCESS};
+}
+export function driverDeleteAccountRequest(responseCallback) {
+  return {responseCallback, type: DELETE_ACCOUNT.REQUEST};
+}
+export function driverDeleteAccountSuccess(data) {
+  return {data, type: DELETE_ACCOUNT.SUCCESS};
 }
 
 // export function userSignupRequest(payload, responseCallback) {

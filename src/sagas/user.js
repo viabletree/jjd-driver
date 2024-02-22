@@ -20,6 +20,7 @@ import {
   CHANGE_DRIVER_AVAILABILITY,
   SET_ADDITIONAL_VEHICLE_DATA,
   GET_VEHICLE_DETAIL_DATA_REQUEST,
+  DELETE_ACCOUNT,
 } from '../actions/ActionTypes';
 import {SAGA_ALERT_TIMEOUT, SOMETHING_WRONG} from '../constants';
 import {
@@ -30,6 +31,7 @@ import {
   profileDataSuccess,
   getVehicleDetailDataSuccess,
   driverLogoutSuccess,
+  driverDeleteAccountSuccess,
 } from '../actions/UserActions';
 // import {
 //   getUserProfileSuccess,
@@ -59,6 +61,7 @@ import {
   PROFILE_DATA as PROFILE_DATA_URL,
   GET_VEHICLE_DETAIL_DATA as GET_VEHICLE_DETAIL_DATA_URL,
   DRIVER_LOGOUT as DRIVER_LOGOUT_URL,
+  DELETE_ACCOUNT as DELETE_ACCOUNT_URL,
   callRequest,
 } from '../config/WebService';
 import ApiSauce from '../services/ApiSauce';
@@ -286,6 +289,7 @@ function* profileDataRequest() {
         ApiSauce,
       );
       if (response.status) {
+        console.log('profile data', response.data);
         yield put(profileDataSuccess(response.data));
 
         if (responseCallback) responseCallback(true, null);
@@ -314,6 +318,31 @@ function* driverLogoutRequest() {
       if (response.success) {
         if (responseCallback) responseCallback(true, null);
         yield put(driverLogoutSuccess());
+      } else {
+        if (responseCallback) responseCallback(null, true);
+        alert(response.err || SOMETHING_WRONG);
+      }
+    } catch (err) {
+      if (responseCallback) responseCallback(null, err);
+      alert(err.message);
+    }
+  }
+}
+function* deleteAccountRequest() {
+  while (true) {
+    const {responseCallback} = yield take(DELETE_ACCOUNT.REQUEST);
+    try {
+      const response = yield call(
+        callRequest,
+        DELETE_ACCOUNT_URL,
+        {},
+        '',
+        {},
+        ApiSauce,
+      );
+      if (response.success) {
+        if (responseCallback) responseCallback(true, null);
+        yield put(driverDeleteAccountSuccess());
       } else {
         if (responseCallback) responseCallback(null, true);
         alert(response.err || SOMETHING_WRONG);
@@ -585,4 +614,5 @@ export default function* root() {
   yield fork(validatePostcode);
   yield fork(userSignup);
   yield fork(changeDriverAvailability);
+  yield fork(deleteAccountRequest);
 }

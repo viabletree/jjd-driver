@@ -97,6 +97,7 @@ export const DECLINE_JOB_CANCEL_CONFIRM = createRequestTypes(
 );
 export const PROFILE_DATA = createRequestTypes('PROFILE_DATA');
 export const DRIVER_LOGOUT = createRequestTypes('DRIVER_LOGOUT');
+export const DELETE_ACCOUNT = createRequestTypes('DELETE_ACCOUNT');
 export const JOB_DETAIL = createRequestTypes('JOB_DETAIL');
 export const GET_SINGLE_JOB = createRequestTypes('GET_SINGLE_JOB');
 export const COMPLETE_JOBS = createRequestTypes('COMPLETE_JOBS');

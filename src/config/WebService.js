@@ -259,6 +259,10 @@ export const DRIVER_LOGOUT = {
   route: '/d/logout',
   type: REQUEST_TYPE.POST,
 };
+export const DELETE_ACCOUNT = {
+  route: '/d/driver/request-delete',
+  type: REQUEST_TYPE.POST,
+};
 export const GET_COMPLETE_JOBS_DETAIL = {
   route: '/d/driver/completed',
   type: REQUEST_TYPE.POST,

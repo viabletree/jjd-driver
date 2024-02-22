@@ -20,11 +20,16 @@ export default function ProfileView(props) {
     driverProfile,
     loading,
     handleLogout,
-    bottomSheetRef,
+    logoutBottomSheetRef,
     cancelLogout,
+    handleDeleteAccount,
+    deleteBottomSheetRef,
+    cancelDeleteAccount,
+    sureDeleteAccount,
     sureLogout,
     onJob,
     jobInProgress,
+    deleteLoading,
   } = props;
 
   return (
@@ -110,15 +115,6 @@ export default function ProfileView(props) {
                 </Text>
               </View>
             </View>
-          </View>
-
-          <View style={styles.profileWrapper}>
-            <TouchableOpacity
-              style={[styles.rectangleBox, {backgroundColor: 'red'}]}>
-              <Text color={Colors.white} size={Fonts.size.xiv}>
-                Delete Account
-              </Text>
-            </TouchableOpacity>
           </View>
 
           {/* profile row end*/}
@@ -213,13 +209,51 @@ export default function ProfileView(props) {
                 </Text>
               </View>
             </View>
+            {deleteLoading ? (
+              <ActivityIndicator color={Colors.red} size={'small'} />
+            ) : (
+              <View style={styles.profileWrapper}>
+                {!driverProfile?.request_delete ? (
+                  <TouchableOpacity
+                    style={AppStyles.centerInner}
+                    onPress={handleDeleteAccount}>
+                    <Text
+                      type={Fonts.type.bold}
+                      color={Colors.red}
+                      style={{textDecorationLine: 'underline'}}
+                      size={Fonts.size.xv}>
+                      Delete Account
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <Text
+                    type={Fonts.type.bold}
+                    color={Colors.red}
+                    style={{textAlign: 'center'}}
+                    size={Fonts.size.xv}>
+                    {'Account deletion pending.'}
+                  </Text>
+                )}
+              </View>
+            )}
+            <View style={[styles.profileWrapper, AppStyles.centerInner]}>
+              {driverProfile?.paused && (
+                <Text
+                  type={Fonts.type.bold}
+                  color={Colors.red}
+                  style={{textAlign: 'center'}}
+                  size={Fonts.size.xv}>
+                  {'Account Paused.\nContact JJD Vans admin.'}
+                </Text>
+              )}
+            </View>
           </View>
         </ScrollView>
       )}
 
-      {/* bottom sheet start */}
+      {/*Logout bottom sheet start */}
       <BottomSheetAlert
-        getRef={ref => bottomSheetRef(ref)}
+        getRef={ref => logoutBottomSheetRef(ref)}
         title="Are you sure?"
         positiveButtonText="Yes"
         positiveButtonBgColor={Colors.bitterSweet}
@@ -230,7 +264,21 @@ export default function ProfileView(props) {
         negativeButtonTextColor={Colors.black}
         negativeButtonEvent={cancelLogout}
       />
-      {/* bottom sheet end */}
+      {/*Logout bottom sheet end */}
+      {/*Delete bottom sheet start */}
+      <BottomSheetAlert
+        getRef={ref => deleteBottomSheetRef(ref)}
+        title="Are you sure?"
+        positiveButtonText="Yes"
+        positiveButtonBgColor={Colors.bitterSweet}
+        positiveButtonTextColor={Colors.white}
+        positiveButtonEvent={sureDeleteAccount}
+        negativeButtonText="Cancel"
+        negativeButtonBgColor={Colors.gallery}
+        negativeButtonTextColor={Colors.black}
+        negativeButtonEvent={cancelDeleteAccount}
+      />
+      {/*Delete bottom sheet end */}
     </View>
   );
 }

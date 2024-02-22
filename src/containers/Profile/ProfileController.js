@@ -5,6 +5,7 @@ import ProfileView from './ProfileView';
 import {
   profileDataRequest,
   driverLogoutRequest,
+  driverDeleteAccountRequest,
 } from '../../actions/UserActions';
 import {getCsrfTokenRequest} from '../../actions/GeneralActions';
 import util from '../../util';
@@ -16,7 +17,7 @@ import _ from 'lodash';
 class ProfileController extends React.Component {
   constructor() {
     super();
-    this.state = {loading: true, logs: '', num: 0};
+    this.state = {loading: true, logs: '', num: 0, deleteLoading: false};
     ProfileController.instance = this;
   }
   static propTypes = {};
@@ -48,20 +49,24 @@ class ProfileController extends React.Component {
   initialRequest = () => {
     this.props.profileDataRequest(() => {
       this.setState({loading: false});
+      console.log('driverProfile', this.props.driverProfile);
     });
   };
 
   //user click on logout
   handleLogout = () => {
     if (!this.props.onJob) {
-      this.RBSheet.open();
+      this.logoutRBSheet.open();
     } else {
       util.topAlert('Con not logout while performing job', true);
     }
   };
+  handleDeleteAccount = () => {
+    this.deleteRBSheet.open();
+  };
 
   sureLogout = () => {
-    this.RBSheet.close();
+    this.logoutRBSheet.close();
     this.props.driverLogoutRequest(() => {
       this.props.getCsrfTokenRequest();
       Actions.reset('login');
@@ -69,10 +74,27 @@ class ProfileController extends React.Component {
       util.resetGenericPassword();
     });
   };
+  sureDeleteAccount = () => {
+    this.deleteRBSheet.close();
+    this.setState({deleteLoading: true});
+    this.props.driverDeleteAccountRequest(() => {
+      this.setState({deleteLoading: false});
+    });
+    // this.logoutRBSheet.close();
+    // this.props.driverLogoutRequest(() => {
+    //   this.props.getCsrfTokenRequest();
+    //   Actions.reset('login');
+    //   // removing data from keychain
+    //   util.resetGenericPassword();
+    // });
+  };
 
   //logout bottom sheet cancel
   cancelLogout = () => {
-    this.RBSheet.close();
+    this.logoutRBSheet.close();
+  };
+  cancelDeleteAccount = () => {
+    this.deleteRBSheet.close();
   };
 
   render() {
@@ -85,15 +107,22 @@ class ProfileController extends React.Component {
         driverProfile={this.props.driverProfile}
         loading={loading}
         handleLogout={this.handleLogout}
-        bottomSheetRef={ref => {
-          this.RBSheet = ref;
+        logoutBottomSheetRef={ref => {
+          this.logoutRBSheet = ref;
         }}
+        handleDeleteAccount={this.handleDeleteAccount}
+        cancelDeleteAccount={this.cancelDeleteAccount}
+        deleteBottomSheetRef={ref => {
+          this.deleteRBSheet = ref;
+        }}
+        sureDeleteAccount={this.sureDeleteAccount}
         cancelLogout={this.cancelLogout}
         sureLogout={this.sureLogout}
         startTracking={this.startTracking}
         stopTracking={this.stopTracking}
         logs={logs}
         clearLogs={this.clearLogs}
+        deleteLoading={this.state.deleteLoading}
       />
     );
   }
@@ -103,5 +132,10 @@ const mapStateToProps = ({user, jobs}) => ({
   onJob: jobs.onJob,
   jobInProgress: jobs.jobInProgress,
 });
-const actions = {profileDataRequest, driverLogoutRequest, getCsrfTokenRequest};
+const actions = {
+  profileDataRequest,
+  driverLogoutRequest,
+  getCsrfTokenRequest,
+  driverDeleteAccountRequest,
+};
 export default connect(mapStateToProps, actions)(ProfileController);
