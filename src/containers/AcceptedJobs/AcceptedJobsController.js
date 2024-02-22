@@ -125,7 +125,4 @@ const actions = {
   getAcceptedUpcomingJobsRequest,
   setSelectedTab,
 };
-export default connect(
-  mapStateToProps,
-  actions,
-)(AcceptedJobsController);
+export default connect(mapStateToProps, actions)(AcceptedJobsController);

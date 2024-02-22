@@ -1,28 +1,22 @@
 import React from 'react';
 import {
-  View,
-  StatusBar,
   ActivityIndicator,
-  TouchableOpacity,
   FlatList,
+  StatusBar,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {
+  AvailableJobItem,
   CustomNavbar,
-  JobSummary,
   JobListEmptyComponent,
   Text,
-  SubTabs,
-  AvailableJobItem,
 } from '../../components';
-import messaging from '@react-native-firebase/messaging';
 
-import styles from './AvailableJobsStyles';
-import {Colors, Metrics, AppStyles, Fonts} from '../../theme';
-import Carousel from 'react-native-snap-carousel';
-import {Actions} from 'react-native-router-flux';
-import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Actions} from 'react-native-router-flux';
+import {AppStyles, Colors, Fonts} from '../../theme';
+import styles from './AvailableJobsStyles';
 
 export default function AvailableJobsView(props) {
   const {
@@ -86,7 +80,7 @@ export default function AvailableJobsView(props) {
               <JobListEmptyComponent
                 title="Have you marked your next 14 days availability?"
                 buttonText="Mark Availability Now"
-                action={() => {
+                action={async () => {
                   Actions.jump('availability');
                 }}
               />

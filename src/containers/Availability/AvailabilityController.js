@@ -148,7 +148,7 @@ class AvailabilityController extends React.Component {
         availableDays[0] = tempAvailableDay;
       } else {
         availableDays.push(tempAvailableDay);
-        availableDays.sort(function(a, b) {
+        availableDays.sort(function (a, b) {
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.
           return new Date(a.dateString) - new Date(b.dateString);
@@ -242,7 +242,7 @@ class AvailabilityController extends React.Component {
     } else {
       availableDays.push(tempAvailableDay);
     }
-    availableDays.sort(function(a, b) {
+    availableDays.sort(function (a, b) {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
       return new Date(a.dateString) - new Date(b.dateString);
@@ -324,6 +324,7 @@ class AvailabilityController extends React.Component {
   cancelConfirmBottomSheet = () => {
     this.confirmBottomSheetRef.close();
   };
+
   timeUpdateDone = (start, end) => {
     const {timeChangeIndex, availableDays} = this.state;
     let tempAvlDays = _.cloneDeep(availableDays);
@@ -351,6 +352,7 @@ class AvailabilityController extends React.Component {
       }
     });
   };
+
   goUnavailable = data => {
     let message = 'Today you will be available from ' + data.end;
     let currentTime = moment();
@@ -448,7 +450,4 @@ const actions = {
   setSelectedTab,
   updateLastAvailabilityVisit,
 };
-export default connect(
-  mapStateToProps,
-  actions,
-)(AvailabilityController);
+export default connect(mapStateToProps, actions)(AvailabilityController);

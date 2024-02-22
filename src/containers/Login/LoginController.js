@@ -13,7 +13,7 @@ class LoginController extends React.Component {
     super();
     this.state = {
       // number: '',
-      number: '7778900009',
+      number: '',
       // number: '7778900009',
       // number: '07557857345', //amarnath.sivert@gmail.com
       // number: '07557857540', //bernard.sivert1@gmail.com

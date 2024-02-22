@@ -11,6 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@notifee/react-native": "^7.8.2",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-clipboard/clipboard": "^1.13.2",
     "@react-native-community/async-storage": "^1.12.1",

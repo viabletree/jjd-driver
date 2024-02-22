@@ -33,6 +33,7 @@ const updateDeviceToken = async token => {
 
 const navigateOnNotificationTap = (data, isFreshLaunch = false) => {
   console.log({data});
+
   switch (data.type) {
     case NOTIFICATION_TYPES.MARK_AVAILABILITY:
       Actions.jump('availability');

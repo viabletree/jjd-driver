@@ -19,6 +19,12 @@ import {
 } from '../../services/firebaseHelper';
 // import firebase from 'react-native-firebase';
 import messaging from '@react-native-firebase/messaging';
+import notifee, {
+  AndroidColor,
+  AndroidImportance,
+  TriggerType,
+} from '@notifee/react-native';
+
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import moment from 'moment';
@@ -112,6 +118,7 @@ class AvailableJobsController extends React.Component {
 
     return true;
   }
+
   _fcmInit = async () => {
     this.requestNotificationPermission();
     messaging().onNotificationOpenedApp(remoteMessage => {
