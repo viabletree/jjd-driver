@@ -89,13 +89,12 @@ function* uploadImage() {
         payload,
         '',
         {
-          Accept: 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
         },
         ApiSauce,
         CLOUDINARY_URL,
       );
       console.log('2');
-
       if (response.secure_url) {
         if (responseCallback) responseCallback(true, response);
         // yield put(uploadUserImageSuccess(response.url));

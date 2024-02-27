@@ -72,7 +72,7 @@ export const GET_LOCATIONS = {
   type: REQUEST_TYPE.POST,
 };
 export const UPLOAD_IMAGE = {
-  route: 'kiffgo/upload',
+  route: 'kiffgo/image/upload',
   type: REQUEST_TYPE.POST,
 };
 export const CREATE_DRIVER_PROFILE = {
