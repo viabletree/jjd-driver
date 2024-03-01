@@ -57,15 +57,11 @@ class AvailableJobsController extends React.Component {
   }
 
   _onExit() {
-    this.setState({loading: true});
+    // this.setState({loading: true});
   }
 
   _onEnter() {
     this.props.setSelectedTab(0);
-    // console.log('here in onEnter');
-    setTimeout(() => {
-      // this.initialCall(this.state.period);
-    }, 1000);
   }
 
   static propTypes = {
