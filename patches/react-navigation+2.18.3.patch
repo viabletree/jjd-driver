@@ -1,0 +1,23 @@
+diff --git a/node_modules/react-navigation/src/createNavigationContainer.js b/node_modules/react-navigation/src/createNavigationContainer.js
+index 3cfc5e3..0d0dbe5 100644
+--- a/node_modules/react-navigation/src/createNavigationContainer.js
++++ b/node_modules/react-navigation/src/createNavigationContainer.js
+@@ -200,7 +200,7 @@ export default function createNavigationContainer(Component) {
+         }
+       }
+       _statefulContainerCount++;
+-      Linking.addEventListener('url', this._handleOpenURL);
++     this.subscription = Linking.addEventListener('url', this._handleOpenURL);
+ 
+       // Pull out anything that can impact state
+       const { persistenceKey, uriPrefix, enableURLHandling } = this.props;
+@@ -293,7 +293,8 @@ export default function createNavigationContainer(Component) {
+ 
+     componentWillUnmount() {
+       this._isMounted = false;
+-      Linking.removeEventListener('url', this._handleOpenURL);
++      // Linking.removeEventListener('url', this._handleOpenURL);
++      this.subscription && this.subscription.remove();
+       this.subs && this.subs.remove();
+ 
+       if (this._isStateful()) {

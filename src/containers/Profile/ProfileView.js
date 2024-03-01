@@ -71,7 +71,7 @@ export default function ProfileView(props) {
           {/* profile row start */}
           <View style={styles.profileRow}>
             <Image
-              source={{uri: driverProfile.driver_profile[0].image.secure_url}}
+              source={{uri: driverProfile?.driver_profile[0]?.image.secure_url}}
               blurRadius={2}
               style={styles.profileImgBlur}
             />
