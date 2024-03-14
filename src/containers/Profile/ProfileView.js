@@ -268,7 +268,7 @@ export default function ProfileView(props) {
       {/*Delete bottom sheet start */}
       <BottomSheetAlert
         getRef={ref => deleteBottomSheetRef(ref)}
-        title="Are you sure?"
+        title="Are you sure you want to delete your profile?"
         positiveButtonText="Yes"
         positiveButtonBgColor={Colors.bitterSweet}
         positiveButtonTextColor={Colors.white}

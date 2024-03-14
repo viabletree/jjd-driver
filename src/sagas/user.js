@@ -145,6 +145,7 @@ function* userLogin() {
         {},
         ApiSauce,
       );
+      console.log({responseresponseresponse: response, payload});
       if (response.status) {
         if (responseCallback) responseCallback(true, null);
         yield put(

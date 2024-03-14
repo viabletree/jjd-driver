@@ -66,6 +66,7 @@ class Welcome extends Component {
       // error reading value
     }
     this.props.getCsrfTokenRequest(success => {
+      console.log({success});
       if (success) {
         if (firstTime === 'yes') {
           Actions.reset('tour');
@@ -169,6 +170,7 @@ class Welcome extends Component {
     const userCredentials = await Util.getGenericPassword();
     // alert(gify(userCredentials));
     if (userCredentials && userCredentials.username != null) {
+      console.log({userCredentials});
       this.props.userLoginRequest(
         {
           phone: userCredentials.username,
@@ -176,6 +178,7 @@ class Welcome extends Component {
         },
         async success => {
           Util.hideLoader(this);
+          console.log({successsuccess: success});
           if (success) {
             this._checkOnJob();
             Actions.reset('dashboard');

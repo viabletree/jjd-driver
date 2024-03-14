@@ -107,7 +107,7 @@ class OtpController extends React.Component {
           } else {
             if (data.is_verified) {
               // added true due to missing key from server
-              console.log(data);
+              console.log({datadata: data, num, newPass});
               this.props.userLoginSuccess(make_user_data([data]));
               util.setGenericPassword('44' + num, newPass);
               Actions.reset('dashboard');

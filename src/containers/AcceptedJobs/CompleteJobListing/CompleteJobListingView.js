@@ -24,41 +24,45 @@ export default function CompleteJobListingView(props) {
 
   return (
     <View style={styles.completeContainer}>
-      {loadingData && <ActivityIndicator color={Colors.accent} />}
-
-      <FlatList
-        sty
-        data={completeJobsListing}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => {
-          return (
-            <CompleteJobItem
-              data={item}
-              onBack={jobCompleteBackClick}
-              onPress={() => itemClick(item.id)}
-            />
-          );
-        }}
-        onRefresh={() => onRefresh()}
-        refreshing={isFetching}
-        onEndReached={loadMoreListData}
-        onEndReachedThreshold={0.1}
-        ListFooterComponent={() => {
-          if (hasLoadMore) return <ActivityIndicator />;
-          return null;
-        }}
-        ListEmptyComponent={() => {
-          return (
-            <JobListEmptyComponent
-              title="No Jobs Completed"
-              subTitle="Start earning today. Tap the search button below to search
+      {loadingData ? (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator color={Colors.accent} />
+        </View>
+      ) : (
+        <FlatList
+          data={completeJobsListing}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => {
+            return (
+              <CompleteJobItem
+                data={item}
+                onBack={jobCompleteBackClick}
+                onPress={() => itemClick(item.id)}
+              />
+            );
+          }}
+          onRefresh={() => onRefresh()}
+          refreshing={isFetching}
+          onEndReached={loadMoreListData}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={() => {
+            if (hasLoadMore) return <ActivityIndicator />;
+            return null;
+          }}
+          contentContainerStyle={{flexGrow: 1}}
+          ListEmptyComponent={() => {
+            return (
+              <JobListEmptyComponent
+                title="No Jobs Completed"
+                subTitle="Start earning today. Tap the search button below to search
             open jobs for you."
-              buttonText="Search Jobs"
-              action={() => Actions.jump('available_jobs')}
-            />
-          );
-        }}
-      />
+                buttonText="Search Jobs"
+                action={() => Actions.jump('available_jobs')}
+              />
+            );
+          }}
+        />
+      )}
     </View>
   );
 }
