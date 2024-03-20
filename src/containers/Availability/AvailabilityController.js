@@ -9,7 +9,9 @@ import {
 import {
   markAvailabilityRequest,
   getAvailabilityRequest,
+  postAvalabilityToggleRequest,
 } from '../../actions/AvailabilityActions';
+import {profileDataRequest} from '../../actions/UserActions';
 import _ from 'lodash';
 import moment from 'moment';
 import util from '../../util';
@@ -31,7 +33,7 @@ class AvailabilityController extends React.Component {
       endIndex: -1,
       dayLoading: false,
       setGoOnline: false,
-      offlineMessage: 'I am going unavailable for full day',
+      offlineMessage: 'Notification Off. You can still see jobs',
       calendarClickedData: {},
     };
     AvailabilityController.instance = this;
@@ -58,8 +60,8 @@ class AvailabilityController extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const {availability} = nextProps;
     let availableDays = [];
-    let onlineToday = false;
-    let offlineMessage = 'I am going unavailable for full day';
+    // let onlineToday = false;
+    // let offlineMessage = 'I am going unavailable for full day';
     let markedDates = {};
     markedDates[moment().format('YYYY-MM-DD')] = {marked: true};
     if (availability.length != prevState.availability.length) {
@@ -87,13 +89,13 @@ class AvailabilityController extends React.Component {
         if (isToday) {
           const startTime = moment(tempAvailableDay.start, 'HH:mm');
           const endTime = moment(tempAvailableDay.end, 'HH:mm');
-          if (today.isBetween(startTime, endTime)) {
-            onlineToday = true;
-          } else {
-            offlineMessage = today.isAfter(endTime)
-              ? "you're unavailable"
-              : 'Today you will be available from ' + tempAvailableDay.start;
-          }
+          // if (today.isBetween(startTime, endTime)) {
+          //   onlineToday = true;
+          // } else {
+          //   offlineMessage = today.isAfter(endTime)
+          //     ? "you're unavailable"
+          //     : 'Today you will be available from ' + tempAvailableDay.start;
+          // }
         }
         // console.log({availableDays});
       });
@@ -101,15 +103,26 @@ class AvailabilityController extends React.Component {
         markedDates,
         availableDays,
         availability,
-        onlineToday,
-        offlineMessage,
+        // onlineToday,
+        // offlineMessage,
       };
     } else {
       return null;
     }
   }
+
   componentDidMount() {
     this.props.getAvailabilityRequest();
+    this.props.profileDataRequest((status, data) => {
+      this.setState({onlineToday: data.app_notification});
+      if (data.app_notification) {
+        this.setState({offlineMessage: 'New job notification on'});
+      } else {
+        this.setState({
+          offlineMessage: 'Notification off. You can still see jobs',
+        });
+      }
+    });
   }
   static propTypes = {};
   static defaultProps = {};
@@ -118,15 +131,16 @@ class AvailabilityController extends React.Component {
     let markedDates = _.cloneDeep(this.state.markedDates);
     let tempMarkDate = {};
     let availableDays = _.cloneDeep(this.state.availableDays);
+    console.log({current});
     if (this.state.onlineToday || current < 20) {
       const {onlineToday} = this.state;
       let newState = !onlineToday;
       if (onlineToday) {
-        this.setState({setGoOnline: true}, () => {
-          this.bottomSheetRef.open();
-        });
+        // this.setState({setGoOnline: true}, () => {
+        //   this.bottomSheetRef.open();
+        // });
       }
-      this.setState({onlineToday: true});
+      this.setState({onlineToday: false});
       tempMarkDate.selected = true;
       tempMarkDate.marked = true;
       markedDates[moment().format('YYYY-MM-DD')] = tempMarkDate;
@@ -166,6 +180,7 @@ class AvailabilityController extends React.Component {
       const payload = {
         availability: JSON.stringify(tempAvailability),
       };
+      console.log({onlineToday: this.state.onlineToday});
       if (!this.state.onlineToday) {
         this.props.markAvailabilityRequest(payload, status => {
           if (status) {
@@ -182,6 +197,38 @@ class AvailabilityController extends React.Component {
       });
     }
   };
+
+  onlineTodayToggleApi = onlineToday => {
+    console.log({onlineTodayToggleApi: 'here'});
+    // this.setState({onlineToday: !this.state.onlineToday});
+    this.setState({onlineToday: !onlineToday});
+    if (!onlineToday) {
+      this.setState({offlineMessage: 'New job notification on'});
+    } else {
+      this.setState({
+        offlineMessage: 'Notification off. You can still see jobs',
+      });
+    }
+
+    this.props.postAvalabilityToggleRequest(status => {
+      console.log({statusstatus: status});
+      if (status) {
+        this.props.profileDataRequest((status, data) => {
+          if (!status) {
+            this.setState({onlineToday: !onlineToday});
+            if (onlineToday) {
+              this.setState({offlineMessage: 'New job notification on'});
+            } else {
+              this.setState({
+                offlineMessage: 'Notification off. You can still see jobs',
+              });
+            }
+          }
+        });
+      }
+    });
+  };
+
   addDaysToAvailable = data => {
     //     year: 2020
     // month: 1
@@ -415,7 +462,7 @@ class AvailabilityController extends React.Component {
       <AvailabilityView
         {...this.props}
         onlineToday={onlineToday}
-        onlineTodayToggle={this.onlineTodayToggle}
+        onlineTodayToggle={this.onlineTodayToggleApi}
         addDaysToAvailable={this.addDaysToAvailable}
         markedDates={markedDates}
         availableDays={availableDays}
@@ -449,5 +496,7 @@ const actions = {
   getAvailabilityRequest,
   setSelectedTab,
   updateLastAvailabilityVisit,
+  postAvalabilityToggleRequest,
+  profileDataRequest,
 };
 export default connect(mapStateToProps, actions)(AvailabilityController);

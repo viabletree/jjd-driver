@@ -267,6 +267,10 @@ export const GET_COMPLETE_JOBS_DETAIL = {
   route: '/d/driver/completed',
   type: REQUEST_TYPE.POST,
 };
+export const AVAILABLE_TOGGLE_API = {
+  route: '/d/driver/toggle-notification',
+  type: REQUEST_TYPE.POST,
+};
 
 export const callRequest = function (
   url,
@@ -295,7 +299,6 @@ export const callRequest = function (
     parameter && !_.isEmpty(parameter)
       ? `${url.route}/${parameter}`
       : url.route;
-
   if (url.type === REQUEST_TYPE.POST) {
     // ;
     if (baseUrl === BASE_URL) {

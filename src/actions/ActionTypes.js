@@ -38,6 +38,7 @@ export const GET_ACCEPTED_UPCOMING_JOBS = createRequestTypes(
 );
 export const MARK_AVAILABILITY = createRequestTypes('MARK_AVAILABILITY');
 export const GET_AVAILABILITY = createRequestTypes('GET_AVAILABILITY');
+export const AVAILABLE_TOGGLE_API = createRequestTypes('AVAILABLE_TOGGLE_API');
 export const LEFT_FOR_JOB = createRequestTypes('LEFT_FOR_JOB');
 export const ARRIVED_DESTINATION = createRequestTypes('ARRIVED_DESTINATION');
 export const STOP_COMPLETE = createRequestTypes('STOP_COMPLETE');

@@ -1,4 +1,8 @@
-import {MARK_AVAILABILITY, GET_AVAILABILITY} from './ActionTypes';
+import {
+  MARK_AVAILABILITY,
+  GET_AVAILABILITY,
+  AVAILABLE_TOGGLE_API,
+} from './ActionTypes';
 
 export function markAvailabilityRequest(payload, responseCallback) {
   return {
@@ -23,5 +27,12 @@ export function getAvailabilitySuccess(data) {
   return {
     data,
     type: GET_AVAILABILITY.SUCCESS,
+  };
+}
+
+export function postAvalabilityToggleRequest(responseCallback) {
+  return {
+    responseCallback,
+    type: AVAILABLE_TOGGLE_API.REQUEST,
   };
 }

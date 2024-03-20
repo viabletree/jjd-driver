@@ -293,7 +293,7 @@ function* profileDataRequest() {
         console.log('profile data', response.data);
         yield put(profileDataSuccess(response.data));
 
-        if (responseCallback) responseCallback(true, null);
+        if (responseCallback) responseCallback(true, response.data);
       } else {
         if (responseCallback) responseCallback(null, true);
         alert(response.err || SOMETHING_WRONG);

@@ -92,14 +92,12 @@ export default function AvailabilityView(props) {
           <Text size={Fonts.size.xvi} type="bold">
             Go available for today
           </Text>
-          {onlineToday && (
+          {/* {onlineToday && (
             <Text size={Fonts.size.xii}>I am available full day from now</Text>
-          )}
-          {!onlineToday && (
-            <Text size={Fonts.size.xii} color="#ff5d5d">
-              {offlineMessage}
-            </Text>
-          )}
+          )} */}
+          <Text size={Fonts.size.xii} color="#ff5d5d">
+            {offlineMessage}
+          </Text>
         </View>
         <Switch
           thumbColor={Colors.white}
@@ -109,7 +107,7 @@ export default function AvailabilityView(props) {
           }}
           value={onlineToday}
           onChange={() => {
-            onlineTodayToggle();
+            onlineTodayToggle(onlineToday);
           }}
         />
       </View>

@@ -1,5 +1,9 @@
 import {take, put, call, fork, takeLatest} from 'redux-saga/effects';
-import {MARK_AVAILABILITY, GET_AVAILABILITY} from '../actions/ActionTypes';
+import {
+  MARK_AVAILABILITY,
+  GET_AVAILABILITY,
+  AVAILABLE_TOGGLE_API,
+} from '../actions/ActionTypes';
 import {SAGA_ALERT_TIMEOUT, SOMETHING_WRONG} from '../constants';
 import {
   markAvailabilitySuccess,
@@ -9,6 +13,7 @@ import {
 import {
   MARK_AVAILABILITY as MARK_AVAILABILITY_URL,
   GET_AVAILABILITY as GET_AVAILABILITY_URL,
+  AVAILABLE_TOGGLE_API as AVAILABLE_TOGGLE_API_URL,
   callRequest,
 } from '../config/WebService';
 import ApiSauce from '../services/ApiSauce';
@@ -70,7 +75,31 @@ function* getAvailability() {
     }
   }
 }
+function* postAvailabilityToggle() {
+  while (true) {
+    const {responseCallback} = yield take(AVAILABLE_TOGGLE_API.REQUEST);
+    console.log('responseCallback', responseCallback);
+    try {
+      const response = yield call(
+        callRequest,
+        AVAILABLE_TOGGLE_API_URL,
+        {},
+        '',
+        {},
+        ApiSauce,
+      );
+      if (response) {
+        if (responseCallback) responseCallback(true);
+      } else {
+      }
+    } catch (err) {
+      if (responseCallback) responseCallback();
+      alert(err.message);
+    }
+  }
+}
 export default function* root() {
   yield fork(markAvailability);
   yield fork(getAvailability);
+  yield fork(postAvailabilityToggle);
 }
