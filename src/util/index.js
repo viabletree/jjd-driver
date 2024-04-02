@@ -37,11 +37,13 @@ class Util {
     return Platform.OS === 'android';
   }
   isValidURL(url: 'string') {
-    const re = /^(http|https|fttp):\/\/|[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?$/;
+    const re =
+      /^(http|https|fttp):\/\/|[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?$/;
     return re.test(url);
   }
   isEmailValid(email: string) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
   isPasswordValid(password: string) {
@@ -388,16 +390,17 @@ class Util {
   }
 
   hasLocationPermission = async () => {
-    if (
-      Platform.OS === 'ios' ||
-      (Platform.OS === 'android' && Platform.Version < 23)
-    ) {
-      return true;
-    }
+    // if (
+    //   Platform.OS === 'ios' ||
+    //   (Platform.OS === 'android' && Platform.Version < 23)
+    // ) {
+    //   return true;
+    // }
 
     const hasPermission = await PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     );
+    console.log({hasPermission});
 
     if (hasPermission) return true;
 
@@ -423,8 +426,12 @@ class Util {
   };
   findCoordinates = async () => {
     const hasLocationPermission = await this.hasLocationPermission();
+
+    if (Platform.OS === 'ios') {
+      const status = await Geolocation.requestAuthorization('whenInUse');
+    }
+    console.log({hasLocationPermission});
     if (!hasLocationPermission) return;
-    //Instead of navigator.geolocation, just use Geolocation.
 
     return new Promise(async (resolve, reject) => {
       Geolocation.getCurrentPosition(
@@ -435,10 +442,14 @@ class Util {
           resolve(position.coords);
         },
         error => {
-          console.log(error.code, error.message);
-          this.topAlert(error.message || ERROR_SOMETHING_WENT_WRONG);
+          console.log({errorC: error.code, errorM: error.message});
+          // this.topAlert(error.message || ERROR_SOMETHING_WENT_WRONG);
         },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        {
+          enableHighAccuracy: false,
+          accuracy: {android: 'high', ios: 'bestForNavigation'},
+          maximumAge: 0,
+        },
       );
     });
   };
@@ -463,16 +474,10 @@ class Util {
         ? 'bicycling'
         : 'driving',
     };
-    var paramString = `key=${params.key}&origins=${
-      params.origins
-    }&destinations=${params.destinations}&units=${params.units}&mode=${
-      params.mode
-    }`;
+    var paramString = `key=${params.key}&origins=${params.origins}&destinations=${params.destinations}&units=${params.units}&mode=${params.mode}`;
 
     if (options.time) {
-      paramString += `&departure_time=${
-        options.time
-      }&traffic_model=pessimistic`;
+      paramString += `&departure_time=${options.time}&traffic_model=pessimistic`;
     }
 
     let finalApiURL = `${apiHost}${paramString}`;

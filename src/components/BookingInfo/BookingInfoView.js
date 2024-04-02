@@ -98,7 +98,7 @@ export default function BookingInfoView(props) {
         {/* end row */}
       </View>
       {/* job id end */}
-      {status === 'Complete' && (
+      {status == 'Complete' && (
         <View style={styles.detailBox}>
           {/* row */}
           <View style={[AppStyles.flexRow, AppStyles.spaceBetween]}>

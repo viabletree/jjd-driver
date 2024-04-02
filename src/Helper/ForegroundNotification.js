@@ -9,8 +9,11 @@ export default ForegroundHander = () => {
 
       const {title} = data || {};
       const {body} = notification;
-      console.log({remoteMessage});
-
+      const channelId = await notifee.createChannel({
+        id: 'com_jjd_driver',
+        name: 'Driver Channel',
+        importance: AndroidImportance.HIGH,
+      });
       await notifee.displayNotification({
         title: title,
         body: body,

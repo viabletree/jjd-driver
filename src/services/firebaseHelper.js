@@ -17,7 +17,6 @@ const updateDeviceToken = async token => {
   let fcmToken = '';
 
   fcmToken = await messaging().getToken();
-  console.log({fcmToken});
   if (fcmToken) {
     console.log({fcmToken});
     DataHandler.getStore().dispatch(

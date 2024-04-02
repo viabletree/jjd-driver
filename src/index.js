@@ -51,12 +51,12 @@ export default class App extends Component {
           barStyle="dark-content"
           translucent={true}
         />
-        <ForegroundHander />
 
         <Provider store={this.state.store}>
           <AppNavigator />
         </Provider>
         <MessageBar />
+        <ForegroundHander />
       </View>
     );
   }

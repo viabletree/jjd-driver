@@ -39,9 +39,7 @@ class MapAlertViewController extends React.Component {
       this.props.mapOnClick();
 
       util.openLinkInBrowser(
-        `${WAZE_BASE_URL}ll=${endAddress.latitude},${
-          endAddress.longitude
-        }&navigate=yes`,
+        `${WAZE_BASE_URL}ll=${endAddress.latitude},${endAddress.longitude}&navigate=yes`,
       );
     } else {
       if (startAddress.latitude && startAddress.longitude) {
@@ -73,7 +71,4 @@ class MapAlertViewController extends React.Component {
 }
 const mapStateToProps = ({}) => ({});
 const actions = {};
-export default connect(
-  mapStateToProps,
-  actions,
-)(MapAlertViewController);
+export default connect(mapStateToProps, actions)(MapAlertViewController);

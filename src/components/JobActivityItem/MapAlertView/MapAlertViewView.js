@@ -35,12 +35,12 @@ export default function MapAlertViewView(props) {
           </TouchableOpacity>
           <View style={styles.spacer} />
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
               onNavBtnPress(MAP_TYPES.GOOGLE, currentLocation, {
                 latitude,
                 longitude,
-              })
-            }>
+              });
+            }}>
             <RnImage source={Images.google_map_icon} style={styles.mapIcon} />
           </TouchableOpacity>
         </View>

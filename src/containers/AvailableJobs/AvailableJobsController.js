@@ -119,9 +119,7 @@ class AvailableJobsController extends React.Component {
     this.requestNotificationPermission();
     messaging().onNotificationOpenedApp(remoteMessage => {
       const {data} = remoteMessage;
-      console.log({datadata: data, remoteMessage});
     });
-    console.log('_fcmInit_fcmInit');
     PushNotification.configure({
       onRegister: function (token) {
         console.log({token});
