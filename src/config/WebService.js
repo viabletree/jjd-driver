@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import Util from '../util';
 
-export let BASE_URL = 'https://jjd-api-v2.herokuapp.com/'; //staging
-// export let BASE_URL = 'https://api.jjdvans.com/'; //live
+// export let BASE_URL = 'https://jjd-api-v2.herokuapp.com/'; //staging
+export let BASE_URL = 'https://api.jjdvans.com/'; //live
 // export const BASE_URL = 'https://kiffgo-staging.herokuapp.com/';
 //export let BASE_URL = 'https://api.kiffgo.com/';
 // export const BASE_URL = 'http://192.168.1.18/'; // tasneem's machine ip
