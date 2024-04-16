@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  RefreshControl,
   StatusBar,
   TouchableOpacity,
   View,
@@ -59,7 +60,9 @@ export default function AvailableJobsView(props) {
       />
 
       {/* loader start */}
-      {loading && <ActivityIndicator style={AppStyles.mTop20} />}
+      {loading && (
+        <ActivityIndicator color={Colors.accent} style={AppStyles.mTop20} />
+      )}
       {/* loader end */}
 
       {!loading && (
@@ -72,6 +75,14 @@ export default function AvailableJobsView(props) {
           showsVerticalScrollIndicator={false}
           onRefresh={() => onRefresh()}
           refreshing={isFetching}
+          refreshControl={
+            <RefreshControl
+              refreshing={isFetching}
+              onRefresh={onRefresh}
+              colors={[Colors.accent]}
+              tintColor={Colors.accent}
+            />
+          }
           renderItem={({item}) => {
             return <AvailableJobItem job={item} />;
           }}

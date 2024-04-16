@@ -15,6 +15,7 @@ import {
   AvailabilityListItem,
   StartEndTime,
   BottomSheetAlert,
+  Loader,
 } from '../../components';
 import styles from './AvailabilityStyles';
 import {Colors, AppStyles, Fonts, Metrics} from '../../theme';
@@ -50,6 +51,7 @@ export default function AvailabilityView(props) {
     jobInProgress,
     onJob,
     calendarClickedData,
+    isLoaderAvailability,
   } = props;
   let today = moment();
   const startDate = today.format('YYYY-MM-DD');
@@ -238,6 +240,7 @@ export default function AvailabilityView(props) {
             cancelConfirmBottomSheet();
           }}
         />
+        <Loader loading={isLoaderAvailability} />
       </ScrollView>
     </View>
   );

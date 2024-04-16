@@ -35,6 +35,7 @@ class AvailabilityController extends React.Component {
       setGoOnline: false,
       offlineMessage: 'Notification Off. You can still see jobs',
       calendarClickedData: {},
+      isLoaderAvailability: false,
     };
     AvailabilityController.instance = this;
   }
@@ -312,6 +313,7 @@ class AvailabilityController extends React.Component {
       availability: JSON.stringify(tempAvailability),
     };
     this.props.markAvailabilityRequest(payload, status => {
+      this.setState({isLoaderAvailability: false});
       if (!status) {
         this.setState({
           markedDates: backUpMarkDates,
@@ -331,12 +333,17 @@ class AvailabilityController extends React.Component {
           this.confirmBottomSheetRef.open();
         });
       } else {
+        this.setState({isLoaderAvailability: true});
+
         this.addDaysToAvailable(data);
       }
     } else {
+      this.setState({isLoaderAvailability: true});
+
       this.addDaysToAvailable(data);
     }
   };
+
   unmarkDayConfirm = () => {
     this.addDaysToAvailable(this.state.calendarClickedData);
     this.confirmBottomSheetRef.close();
@@ -429,6 +436,7 @@ class AvailabilityController extends React.Component {
       availability: JSON.stringify(tempAvailability),
     };
     this.props.markAvailabilityRequest(payload, status => {
+      this.setState({isLoaderAvailability: false});
       if (status) {
         this.setState(
           {
@@ -457,6 +465,7 @@ class AvailabilityController extends React.Component {
       offlineMessage,
 
       calendarClickedData,
+      isLoaderAvailability,
     } = this.state;
     return (
       <AvailabilityView
@@ -482,6 +491,7 @@ class AvailabilityController extends React.Component {
         onCalendarDateClick={this.onCalendarDateClick}
         unmarkDayConfirm={this.unmarkDayConfirm}
         calendarClickedData={calendarClickedData}
+        isLoaderAvailability={isLoaderAvailability}
       />
     );
   }

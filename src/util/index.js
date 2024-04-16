@@ -425,13 +425,15 @@ class Util {
     return false;
   };
   findCoordinates = async () => {
-    const hasLocationPermission = await this.hasLocationPermission();
+    if (Platform.OS === 'android') {
+      const hasLocationPermission = await this.hasLocationPermission();
+      console.log({hasLocationPermission});
+      if (!hasLocationPermission) return;
+    }
 
     if (Platform.OS === 'ios') {
       const status = await Geolocation.requestAuthorization('whenInUse');
     }
-    console.log({hasLocationPermission});
-    if (!hasLocationPermission) return;
 
     return new Promise(async (resolve, reject) => {
       Geolocation.getCurrentPosition(

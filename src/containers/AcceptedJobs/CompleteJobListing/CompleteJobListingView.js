@@ -4,6 +4,7 @@ import {
   Image as RnImage,
   FlatList,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import CompleteJobItem from '../CompleteJobItem';
 import styles from './CompleteJobListingStyles';
@@ -42,6 +43,14 @@ export default function CompleteJobListingView(props) {
             );
           }}
           onRefresh={() => onRefresh()}
+          refreshControl={
+            <RefreshControl
+              refreshing={isFetching}
+              onRefresh={onRefresh}
+              colors={[Colors.accent]}
+              tintColor={Colors.accent}
+            />
+          }
           refreshing={isFetching}
           onEndReached={loadMoreListData}
           onEndReachedThreshold={0.1}
@@ -55,7 +64,7 @@ export default function CompleteJobListingView(props) {
               <JobListEmptyComponent
                 title="No Jobs Completed"
                 subTitle="Start earning today. Tap the search button below to search
-            open jobs for you."
+                open jobs for you."
                 buttonText="Search Jobs"
                 action={() => Actions.jump('available_jobs')}
               />

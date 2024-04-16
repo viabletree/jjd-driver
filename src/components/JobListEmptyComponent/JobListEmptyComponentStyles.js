@@ -6,8 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
     paddingHorizontal: 30,
-
-    height: Metrics.screenHeight / 2,
+    // height: Metrics.screenHeight / 2,
   },
   searchButton: {
     marginTop: 25,

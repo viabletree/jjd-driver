@@ -100,6 +100,7 @@ export default function AcceptedJobsView(props) {
               <RefreshControl
                 refreshing={loading}
                 onRefresh={getData}
+                colors={[Colors.accent]}
                 tintColor={Colors.accent}
               />
             }

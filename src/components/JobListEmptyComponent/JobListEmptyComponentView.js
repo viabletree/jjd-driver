@@ -8,7 +8,10 @@ export default function JobListEmptyComponentView(props) {
     <View style={styles.container}>
       <View
         style={[
-          {alignSelf: 'center', marginTop: Metrics.screenHeight / 3},
+          {
+            alignSelf: 'center',
+            marginTop: Metrics.screenHeight / 3,
+          },
           AppStyles.flex,
         ]}>
         <Text
